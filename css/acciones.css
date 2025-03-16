@@ -1,0 +1,52 @@
+
+.btn-megacharizard {
+    min-height: 100px;
+    background-color:#00AEEF ; 
+    border-color: #202020; 
+    color: #0B0B45;
+    font-size: 20px;
+}
+.btn-megacharizard:hover {
+    background-color: #202020; 
+    color: white; 
+}
+.logos{
+    width: 160px;
+    height: 100px;
+}
+
+.btn-megaC{
+    min-height: 80px;
+    font-size: 20px;
+    background-color: #E66200; 
+    color: white; 
+}
+.btn-megaC:hover{
+    background-color: #F8D5A3; 
+    color: black;
+}
+
+.btn-normal{
+    background-color: #00AEEF;
+    min-height: 50px;
+    color: white;
+}
+
+.colores{
+    background-color: #00AEEF;
+}
+
+.btn-normal2{
+    font-size: 20px;
+    background-color: #00AEEF;
+    min-height: 90px;
+    color: white;
+}
+#consulta{
+    padding-top: 80px;
+    padding-bottom: 60px; 
+}
+#servicio{
+   padding-top: 80px;
+   padding-bottom: 80px;
+}
