@@ -16,7 +16,8 @@
 }
 
 .btn-megaC{
-    min-height: 80px;
+    min-height: 60px;
+    padding: 20px;
     font-size: 20px;
     background-color: #E66200; 
     color: white; 
