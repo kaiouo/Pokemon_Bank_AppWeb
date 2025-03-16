@@ -1,0 +1,42 @@
+.header {
+    height: 150px; 
+    background: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+.footer {
+    height: 50px;
+    background: #343a40;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+}
+
+/* Tabla de contenido */
+
+.table-container {
+    margin: 30px auto;
+    max-width: 800px;
+}
+.table th, .table td {
+    text-align: center;
+}
+.income {
+    color: green !important; 
+    font-weight: bold;
+}
+.expense {
+    color: red !important; 
+    font-weight: bold;
+}

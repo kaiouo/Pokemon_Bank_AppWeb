@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Transacciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">  
+    <link rel="stylesheet" href="historialTransacciones.css">
+    <link rel="icon" href="Images/icon.png">
+
+</head>
+<body>
+    <nav class="nav nav-pills nav-justified">
+        <a class="nav-link"  href="principal.html">Inicio</a>
+        <a class="nav-link active" aria-current="page" href="historialTransacciones.html">Historial de transacciones</a>
+        <a class="nav-link" href="graficoTransacciones.html">Analisis grafico de transacciones</a>
+      </nav>
+    <div class="container-fluid">
+        <!-- Sección superior -->
+        <header class="header">
+            Datos del Usuario
+        </header>
+
+        <!-- Sección central -->
+        <div class="container table-container">
+            <h2 class="text-center">Historial de Transacciones</h2>
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Descripción</th>
+                        <th>Monto</th>
+                        <th>Saldo Disponible</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>03/03/2025</td>
+                        <td>Pago en tienda</td>
+                        <td class="expense">- $25.00</td>
+                        <td>$975.00</td>
+                    </tr>
+                    <tr>
+                        <td>02/03/2025</td>
+                        <td>Depósito</td>
+                        <td class="income">+ $200.00</td>
+                        <td>$1,000.00</td>
+                    </tr>
+                    <tr>
+                        <td>01/03/2025</td>
+                        <td>Transferencia recibida</td>
+                        <td class="income">+ $150.00</td>
+                        <td>$800.00</td>
+                    </tr>
+                    <tr>
+                        <td>28/02/2025</td>
+                        <td>Pago de suscripción</td>
+                        <td class="expense">- $10.00</td>
+                        <td>$650.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pie de página -->
+        <footer class="footer">
+            Información de contacto y más
+        </footer>
+    </div>
+
+</body>
+</html>
