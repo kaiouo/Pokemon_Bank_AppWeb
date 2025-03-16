@@ -22,7 +22,7 @@
         </header>
 
         <!-- Sección central -->
-        <div class="container table-container">
+        <div id="mainTable" class="container table-container">
             <h2 class="text-center">Historial de Transacciones</h2>
             <table class="table table-bordered table-striped">
                 <thead class="table-dark">
@@ -62,11 +62,37 @@
             </table>
         </div>
 
+        <div class="container mt-5 d-flex justify-content-end">
+            <div class="col-3">
+            <button id="botonPdf" class="btn btn-normal3 w-90"> Generar PDF </button>
+        </div>
+        </div> 
+
         <!-- Pie de página -->
         <footer class="footer">
             Información de contacto y más
         </footer>
     </div>
+
+    <script>
+        var mainTable = document.getElementById('mainTable');
+        var botonPdf = document.getElementById('botonPdf');
+
+        botonPdf.onclick = function() {
+    const { jsPDF } = window.jspdf;
+    var doc = new jsPDF();
+
+    html2canvas(mainTable).then(canvas => {
+        var imgData = canvas.toDataURL('image/png'); 
+        var imgWidth = 190;
+        var imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        doc.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+        doc.save("historial_transacciones.pdf"); // Descarga el PDF
+    });
+};
+
+    </script>
 
 </body>
 </html>
