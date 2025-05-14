@@ -8,9 +8,19 @@
     font-size: 24px;
     font-weight: bold;
 }
+.btn-megaC{
+    min-height: 30px;
+    padding: 10px;
+    font-size: 15px;
+    background-color: #00AEEF; 
+    color: white; 
+    border-radius: 20px;
+    border-color: #00AEEF;
+}
 .footer {
     height: 50px;
     background: #343a40;
+    margin-top: 40px;
     color: white;
     display: flex;
     align-items: center;
