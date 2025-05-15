@@ -8,6 +8,16 @@
     font-size: 24px;
     font-weight: bold;
 }
+
+.user-info {
+    text-align: center;
+    font-size: 22px;
+    line-height: 1.5;
+}
+.user-info p {
+    margin: 0;
+}
+
 .btn-megaC{
     min-height: 30px;
     padding: 10px;

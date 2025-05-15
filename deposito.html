@@ -9,13 +9,14 @@
     <link rel="stylesheet" href="css/acciones.css">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 </head>
 <body class="colores">
     
     <div id="header1" class="container text-center mt-5">
         <div class="row justify-content-center">
-            <div class="col-5 mb-3"><h2>Depósitos prueba</h2></div>
+            <div class="col-5 mb-3"><h2>Depósitos</h2></div>
             <div class="col-5 mb-3">
                 <img src="Images/Pokémon_Bank_logo.png" alt="logo" class="logos">
             </div>
@@ -40,15 +41,58 @@
     <script>
         document.getElementById("formDeposito").addEventListener("submit", function (e) {
             e.preventDefault();
+            generarComprobanteDeposito();
+        });
 
-            // alert SweetAlert2
+        async function generarComprobanteDeposito() {
+            const monto = document.getElementById("monto").value;
+            const cuenta = document.getElementById("cuenta").value;
+            const fecha = new Date().toLocaleString();
+
+            const comprobante = {
+                tipo: "Depósito",
+                cuenta: cuenta,
+                monto: monto,
+                fecha: fecha
+        };
+
+        // Guardar en localStorage
+            localStorage.setItem("comprobante", JSON.stringify(comprobante));
+
+        // Crear PDF y obtener URL
+            const pdfURL = await generarPDF(comprobante);
+
+        // Mostrar alerta con botón para abrir el PDF
             Swal.fire({
                 title: '¡Depósito exitoso!',
-                text: 'Tu depósito ha sido procesado correctamente.',
+                text: 'Haz clic en "Ver comprobante" para abrir el PDF en otra pestaña.',
                 icon: 'success',
-                confirmButtonText: 'Aceptar'
+                showCancelButton: true,
+                confirmButtonText: 'Ver comprobante',
+                cancelButtonText: 'Cerrar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.open(pdfURL, '_blank');
+                }
             });
-        });
+        }
+
+        async function generarPDF(comprobante) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(16);
+            doc.text("Comprobante de Depósito", 20, 20);
+
+            doc.setFontSize(12);
+            doc.text(`Fecha: ${comprobante.fecha}`, 20, 40);
+            doc.text(`Cuenta: ${comprobante.cuenta}`, 20, 50);
+            doc.text(`Monto: $${comprobante.monto}`, 20, 60);
+            doc.text(`Tipo: ${comprobante.tipo}`, 20, 70);
+
+            const pdfBlob = doc.output("blob");
+            return URL.createObjectURL(pdfBlob);     
+        }
     </script>
 </body>
 </html>

@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
     <link rel="stylesheet" href="css/acciones.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div id="header1" class="container text-center mt-5">
@@ -61,17 +62,54 @@
             });
 
             if (monto) {
-                mostrarAlerta(servicio, parseFloat(monto).toFixed(2));
+                procesarPago(servicio, parseFloat(monto).toFixed(2));
             }
         }
 
-        function mostrarAlerta(servicio, monto) {
+        async function procesarPago(servicio, monto) {
+            const fecha = new Date().toLocaleString();
+            const comprobante = {
+                tipo: "Pago de Servicio",
+                servicio: servicio,
+                monto: monto,
+                fecha: fecha
+            };
+
+            // Guardar en localStorage
+            localStorage.setItem("comprobante", JSON.stringify(comprobante));
+
+            // Generar PDF y obtener URL
+            const pdfURL = await generarPDF(comprobante);
+
+            // Mostrar mensaje de éxito y opción de abrir comprobante
             Swal.fire({
                 title: '¡Pago exitoso!',
-                text: `Has pagado $${monto} por ${servicio}.`,
+                text: `Has pagado $${monto} por ${servicio}. ¿Deseas ver el comprobante?`,
                 icon: 'success',
-                confirmButtonText: 'Aceptar'
+                showCancelButton: true,
+                confirmButtonText: 'Ver comprobante',
+                cancelButtonText: 'Cerrar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.open(pdfURL, '_blank');
+                }
             });
+        }
+
+        async function generarPDF(comprobante) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(16);
+            doc.text("Comprobante de Pago de Servicio", 20, 20);
+            doc.setFontSize(12);
+            doc.text(`Fecha: ${comprobante.fecha}`, 20, 40);
+            doc.text(`Servicio: ${comprobante.servicio}`, 20, 50);
+            doc.text(`Monto: $${comprobante.monto}`, 20, 60);
+            doc.text(`Tipo: ${comprobante.tipo}`, 20, 70);
+
+            const blob = doc.output("blob");
+            return URL.createObjectURL(blob);
         }
     </script>
 </body>
