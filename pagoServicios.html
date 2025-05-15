@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pago de Servicios</title>
+
+    <!-- Bootstrap, estilos y librerías -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
     <link rel="stylesheet" href="css/acciones.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -11,34 +13,66 @@
 <body>
     <div id="header1" class="container text-center mt-5">
         <div class="row justify-content-center">
-        <div class="col-5 mb-3"><h2>Pago de Servicios</h2></div>
-        <div class="col-5 mb-3"><img src="Images/Pokémon_Bank_logo.png" alt="logo" class="logos"></div>
-
-    </div>
-    </div>
-
-    <div id="servicio" class="container text-center mt-5">
-        <div class="row justify-content-center">
-            <div class="col-3 mb-3">
-                <button class="btn btn-normal2 w-100">Energía eléctrica</button>
-            </div>
-            <div class="col-3 mb-3">
-                <button class="btn btn-normal2 w-100" >Internet</button>
-            </div>
-            <div class="col-3 mb-3">
-                <button class="btn btn-normal2 w-100" >Telefonía</button>
-            </div>
-            <div class="col-3">
-                <button class="btn btn-normal2 w-100" >Agua potable</button>
-            </div>
-           
+            <div class="col-5 mb-3"><h2>Pago de Servicios</h2></div>
+            <div class="col-5 mb-3"><img src="Images/Pokémon_Bank_logo.png" alt="logo" class="logos"></div>
         </div>
-    </div> 
+    </div>
+
+    <div class="container text-center mt-5">
+        <div class="row justify-content-center" id="servicios">
+            <div class="col-3 mb-3">
+                <button class="btn btn-normal2 w-100" onclick="solicitarMonto('Energía eléctrica')">Energía eléctrica</button>
+            </div>
+            <div class="col-3 mb-3">
+                <button class="btn btn-normal2 w-100" onclick="solicitarMonto('Internet')">Internet</button>
+            </div>
+            <div class="col-3 mb-3">
+                <button class="btn btn-normal2 w-100" onclick="solicitarMonto('Telefonía')">Telefonía</button>
+            </div>
+            <div class="col-3 mb-3">
+                <button class="btn btn-normal2 w-100" onclick="solicitarMonto('Agua potable')">Agua potable</button>
+            </div>
+        </div>
+    </div>
 
     <div class="container mt-5 d-flex justify-content-end">
-        <a href="principal.html" class="btn btn-megaC w-25"> Salir </a>
+        <a href="principal.html" class="btn btn-megaC w-25">Salir</a>
     </div>
 
+    <script>
+        async function solicitarMonto(servicio) {
+            const { value: monto } = await Swal.fire({
+                title: `Pagar ${servicio}`,
+                input: 'number',
+                inputLabel: 'Ingrese el monto a pagar',
+                inputPlaceholder: 'Ej. 150.00',
+                inputAttributes: {
+                    min: 1,
+                    step: '0.01'
+                },
+                confirmButtonText: 'Pagar',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+                inputValidator: (value) => {
+                    if (!value || value <= 0) {
+                        return 'Ingrese un monto válido.';
+                    }
+                }
+            });
 
+            if (monto) {
+                mostrarAlerta(servicio, parseFloat(monto).toFixed(2));
+            }
+        }
+
+        function mostrarAlerta(servicio, monto) {
+            Swal.fire({
+                title: '¡Pago exitoso!',
+                text: `Has pagado $${monto} por ${servicio}.`,
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+    </script>
 </body>
 </html>
