@@ -30,7 +30,7 @@
 .btn-normal{
     background-color: #00AEEF;
     min-height: 50px;
-    color: #87cfe9;
+    color: white;
 }
 
 .colores{
@@ -41,7 +41,7 @@
     font-size: 20px;
     background-color: #00AEEF;
     min-height: 90px;
-    color: #87cfe9;
+    color: white;
 }
 #consulta{
     padding-top: 80px;

@@ -63,7 +63,7 @@
             }
         }
 
-        function procesarRetiro(monto) {
+        async function procesarRetiro(monto) {
             const fecha = new Date().toLocaleString();
             const comprobante = {
                 tipo: "Retiro",
@@ -87,7 +87,8 @@
                 }
             });
         }
-         async function generarPDF(comprobante) {
+
+        async function generarPDF(comprobante) {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
 
