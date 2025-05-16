@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Consulta de saldo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
-    <link rel="stylesheet" href="css/acciones.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/acciones.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         body {
-            background-color: #cceeff; 
+            background-color: #cceeff;
         }
     </style>
 </head>
 <body>
     <div id="header1" class="container text-center mt-5">
         <div class="row justify-content-center">
-            <div class="col-5 mb-3"><h2>Consulta de saldo</h2></div>
-            <div class="col-5 mb-3"><img src="Images/Pokémon_Bank_logo.png" alt="logo" class="logos"></div>
+            <div class="col-5 mb-3">
+                <h2>Consulta de saldo</h2>
+            </div>
+            <div class="col-5 mb-3">
+                <img src="Images/Pokémon_Bank_logo.png" alt="logo" class="logos" />
+            </div>
         </div>
     </div>
 
@@ -28,13 +32,27 @@
                 <p class="fs-2">Su saldo es de: </p>
             </div>
             <div class="col-3 mb-3">
-                <p class="fs-2">$500.00</p>
+                <p class="fs-2">$<span id="saldoActual">0.00</span></p>
             </div>
         </div>
     </div>
 
     <div class="container mt-5 d-flex justify-content-end">
         <a href="principal.html" class="btn btn-megaC w-25">Salir</a>
-    </div> 
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let saldo = parseFloat(localStorage.getItem("saldo") || "500.00");
+
+            // Si saldo es 0 o menor, se reinicia a 500
+            if (saldo <= 0) {
+                saldo = 500.00;
+                localStorage.setItem("saldo", saldo.toFixed(2));
+            }
+
+            document.getElementById("saldoActual").textContent = saldo.toFixed(2);
+        });
+    </script>
 </body>
 </html>

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Retiro</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
-    <link rel="stylesheet" href="css/acciones.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" /> 
+    <link rel="stylesheet" href="css/acciones.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
@@ -13,7 +13,7 @@
     <div id="header1" class="container text-center mt-5">
         <div class="row justify-content-center">
             <div class="col-5 mb-3"><h2>Retiros</h2></div>
-            <div class="col-5 mb-3"><img src="Images/Pokémon_Bank_logo.png" alt="logo" class="logos"></div>
+            <div class="col-5 mb-3"><img src="Images/Pokémon_Bank_logo.png" alt="logo" class="logos" /></div>
         </div>
     </div>
 
@@ -59,24 +59,50 @@
             });
 
             if (monto) {
-                procesarRetiro(parseFloat(monto).toFixed(2));
+                procesarRetiro(parseFloat(monto));
             }
         }
 
         async function procesarRetiro(monto) {
+            let saldoActual = parseFloat(localStorage.getItem("saldo") || "500");
+
+            if (monto > saldoActual) {
+                Swal.fire({
+                    title: "Fondos insuficientes",
+                    text: `Su saldo actual es de $${saldoActual.toFixed(2)}.`,
+                    icon: "error",
+                    confirmButtonText: 'Aceptar'
+                });
+                return;
+            }
+
+            saldoActual -= monto;
+
+            let mensajeExtra = "";
+
+            // Reiniciar saldo si llega a 0 o menos
+            if (saldoActual <= 0) {
+                saldoActual = 500;
+                mensajeExtra = " Tu saldo llegó a $0 y ha sido reiniciado automáticamente a $500.";
+            }
+
+            localStorage.setItem("saldo", saldoActual.toFixed(2));
+
+            // Guardar comprobante
             const fecha = new Date().toLocaleString();
             const comprobante = {
                 tipo: "Retiro",
-                monto: monto,
+                monto: monto.toFixed(2),
                 fecha: fecha
             };
-
             localStorage.setItem("comprobante", JSON.stringify(comprobante));
+
+            // Generar PDF y obtener URL
             const pdfURL = await generarPDF(comprobante);
 
             Swal.fire({
                 title: "¡Retiro exitoso!",
-                text: `Se ha retirado $${monto}. ¿Deseas ver el comprobante?`,
+                text: `Se ha retirado $${monto.toFixed(2)}.${mensajeExtra} ¿Deseas ver el comprobante?`,
                 icon: "success",
                 showCancelButton: true,
                 confirmButtonText: 'Ver comprobante',
@@ -86,6 +112,15 @@
                     window.open(pdfURL, '_blank');
                 }
             });
+
+            if (saldoActual < 50) {
+                Swal.fire({
+                    title: "Saldo bajo",
+                    text: `Tu saldo actual es de $${saldoActual.toFixed(2)}. Considera hacer un depósito.`,
+                    icon: "warning",
+                    confirmButtonText: "Aceptar"
+                });
+            }
         }
 
         async function generarPDF(comprobante) {
