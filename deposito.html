@@ -70,6 +70,9 @@
             let saldoActual = parseFloat(localStorage.getItem("saldo") || "500");
             saldoActual += monto;
             localStorage.setItem("saldo", saldoActual.toFixed(2));
+            //contador
+            let c = parseInt(localStorage.getItem('cont_depositos')) || 0;
+            localStorage.setItem('cont_depositos', c + 1);
 
             // Crear comprobante
             const fecha = new Date().toLocaleString();

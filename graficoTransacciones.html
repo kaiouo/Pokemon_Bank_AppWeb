@@ -25,7 +25,7 @@
             </div>
         </header>
 
-        <!-- Nuestro grafico -->
+        <!-- Grafico -->
         <div class="text-center my-3">
             <button id="btnActualizar" class="btn-megaC">Actualizar gráfico</button>
           </div>
@@ -42,19 +42,45 @@
     </div>
       <!-- Esta seccion es donde se rellena de datos nuestro grafico -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-    var grafic = document.getElementById("grafico1").getContext("2d");
-    var mgrafico1 = new Chart(grafic, {
-        type: "bar",
-        data: {
-            labels: ['Depositos', 'Retiros','Consultas','Pagos de servicios'],
-            datasets: [{
-                label: 'Transacciones realizadas',
-                data: [1,0,1,2],
-            }]
-        }
-    });
-    });
+    document.addEventListener("DOMContentLoaded", function () {
+    const ctx = document.getElementById("grafico1").getContext("2d");
+    const mgrafico1 = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ['Depósitos', 'Retiros', 'Consultas', 'Pagos de servicios'],
+      datasets: [{
+        label: 'Transacciones realizadas',
+        data: [0,0,0,0], 
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+  function cargarContadores() {
+    return {
+      depositos: parseInt(localStorage.getItem('cont_depositos')) || 0,
+      retiros:   parseInt(localStorage.getItem('cont_retiros'))   || 0,
+      consultas: parseInt(localStorage.getItem('cont_consultas')) || 0,
+      pagos:     parseInt(localStorage.getItem('cont_pagos'))     || 0
+    };
+  }
+  
+    document.getElementById("btnActualizar").addEventListener("click", () => {
+    const c = cargarContadores();
+    mgrafico1.data.datasets[0].data = [
+      c.depositos,
+      c.retiros,
+      c.consultas,
+      c.pagos
+    ];
+    mgrafico1.update();
+  });
+
+   });
 
     </script>
 </body>

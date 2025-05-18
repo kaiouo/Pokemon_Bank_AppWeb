@@ -81,6 +81,9 @@
 
             saldoActual -= monto;
             localStorage.setItem("saldo", saldoActual.toFixed(2));
+            //contador
+            let c = parseInt(localStorage.getItem('cont_pagos')) || 0;
+            localStorage.setItem('cont_pagos', c + 1);
 
             const comprobante = {
                 tipo: "Pago de servicio",

@@ -52,6 +52,9 @@
             }
 
             document.getElementById("saldoActual").textContent = saldo.toFixed(2);
+            //contador
+            let c = parseInt(localStorage.getItem('cont_consultas')) || 0;
+            localStorage.setItem('cont_consultas', c + 1);
         });
     </script>
 </body>

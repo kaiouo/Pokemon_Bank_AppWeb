@@ -76,6 +76,10 @@
                 return;
             }
 
+            //contador
+            let c = parseInt(localStorage.getItem('cont_retiros')) || 0;
+            localStorage.setItem('cont_retiros', c + 1);
+
             saldoActual -= monto;
 
             let mensajeExtra = "";
